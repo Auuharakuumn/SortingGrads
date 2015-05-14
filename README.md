@@ -2,7 +2,7 @@
 Just a small little program to sort seniors into their seating spots.
 
 ##Left to do
-- Output, in excel and diagram format
+- Output, diagram format
 
 ##Requirements
 - Rows of 30, with a gap after 15
