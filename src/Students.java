@@ -11,6 +11,13 @@ public class Students {
 	private int currReserved;
 	private int endOfFour;
 
+	//pads the current student list to a multiple of 30
+	private void pad() {
+		while (this.order.size() % 30 != 0) {
+			order.add("Empty");
+		}
+	}
+
 	public Students(HashMap<String, Double> studentsGPA, String[] students) {
 		this.studentsGPA = studentsGPA;
 		this.students = students;
@@ -50,12 +57,12 @@ public class Students {
 		ArrayList<String> overFour = new ArrayList<>();
 		ArrayList<String> underFour = new ArrayList<>();
 
-		for (String s : order) {
-			if (studentsGPA.get(s) > 4.0) {
-				if ( !(s.equals(highest[0]) || s.equals(highest[1])) ) {
-					overFour.add(s);
-				}
-			} else {
+		for (String s : students) {
+			boolean notVS = !(s.equals(highest[0]) || s.equals(highest[1]));
+
+			if (studentsGPA.get(s) > 4.0 && notVS) {
+				overFour.add(s);
+			} else if (notVS) {
 				underFour.add(s);
 			}
 		}
@@ -67,6 +74,8 @@ public class Students {
 
 		this.order.addAll(overFour);
 		this.order.addAll(underFour);
+
+
 	}
 
 	/*public String[] getStudents() {
@@ -84,11 +93,12 @@ public class Students {
 		}
 
 		for (int i = endOfFour + 1; i < order.size(); i++) {
-			if ((i - 1 % 30) == 0) {
+			if ((i % 30) == 0) {
 				order.add(i, "Reserved");
+
+				this.currReserved++;
 			}
 
-			this.currReserved++;
 
 			if (currReserved == reserved) {
 				return;
@@ -96,16 +106,26 @@ public class Students {
 		}
 
 		for (int i = endOfFour + 1; i < order.size(); i++) {
-			if ((i % 30) == 0) {
+			if (((i + 1) % 30) == 0) {
 				order.add(i, "Reserved");
-			}
 
-			this.currReserved++;
+				this.currReserved++;
+			}
 
 			if (currReserved == reserved) {
 				return;
 			}
 		}
+
+		for (int i = this.order.size() - 1; i >= 0; i--) {
+			if (!this.order.get(i).equals("Empty")) {
+				break;
+			} else {
+				this.order.remove(i);
+			}
+		}
+
+		this.pad();
 	}
 
 	//compare the two last names, to be used in the comparator

@@ -1,10 +1,12 @@
 import javax.swing.*;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.HashMap;
 
 public class SortingGrads {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 		StudentInput si = new StudentInput();
 		Students s;
 		HashMap<String, Double> hm = new HashMap<>();
@@ -46,10 +48,6 @@ public class SortingGrads {
 
 		//reserve the user input number of seats
 		s.reserveSeats(Integer.parseInt(num));
-
-		for (String str : s.getOrder()) {
-			System.out.println(str);
-		}
 	}
 
 	public static boolean isParsableInteger(String input) {
