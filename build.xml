@@ -6,6 +6,7 @@
     <property name="src" location="src"/>
     <property name="build" location="out"/>
     <property name="dist" location="dist"/>
+    <property name="lib.dir" location="lib"/>
 
     <target name="init">
         <tstamp/>
@@ -19,6 +20,7 @@
         <mkdir dir="${dist}/lib"/>
 
         <jar jarfile="${dist}/lib/SortingGrads-${DSTAMP}.jar" basedir="${build}">
+            <zipgroupfileset dir="${lib.dir}" includes="**/*.jar" />
             <manifest>
                 <attribute name="Main-Class" value="SortingGrads"/>
             </manifest>
