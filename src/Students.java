@@ -145,4 +145,8 @@ public class Students {
 	public ArrayList<String> getOrder() {
 		return order;
 	}
+
+	public Students() {
+
+	}
 }
