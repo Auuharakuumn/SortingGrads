@@ -160,11 +160,12 @@ public class SortingGrads {
 		s.reserveSeats(Integer.parseInt(num));
 	}
 
+	//Checks if string input is a valid integer
 	public static boolean isParsableInteger(String input) {
 		boolean parsable = true;
 
 		try {
-			Integer.parseInt(input);
+			Integer i = Integer.parseInt(input); //assignment to get rid of warnings
 		} catch (NumberFormatException nfe) {
 			parsable = false;
 		}
@@ -172,11 +173,12 @@ public class SortingGrads {
 		return parsable;
 	}
 
+	//Checks if string input is a valid double
 	public static boolean isParsableDouble(String input) {
 		boolean parsable = true;
 
 		try {
-			Double.parseDouble(input);
+			Double d = Double.parseDouble(input); //assignment to get rid of warnings
 		} catch (NumberFormatException nfe) {
 			parsable = false;
 		}
@@ -184,6 +186,7 @@ public class SortingGrads {
 		return parsable;
 	}
 
+	//rounds a double value to decimal places
 	public static double round(double value, int places) {
 		BigDecimal bd = new BigDecimal(value);
 		bd = bd.setScale(places, RoundingMode.HALF_UP);
