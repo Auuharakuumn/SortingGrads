@@ -1,0 +1,27 @@
+<project name="SortingGrads" default="dist" basedir=".">
+    <description>
+        Building a jar file.
+    </description>
+
+    <property name="src" location="src"/>
+    <property name="build" location="out"/>
+    <property name="dist" location="dist"/>
+
+    <target name="init">
+        <tstamp/>
+    </target>
+
+    <target name="compile" depends="init" description="compiling sources">
+        <javac srcdir="${src}" destdir="${build}"/>
+    </target>
+
+    <target name="dist" depends="compile">
+        <mkdir dir="${dist}/lib"/>
+
+        <jar jarfile="${dist}/lib/SortingGrads-${DSTAMP}.jar" basedir="${build}">
+            <manifest>
+                <attribute name="Main-Class" value="SortingGrads"/>
+            </manifest>
+        </jar>
+    </target>
+</project>
