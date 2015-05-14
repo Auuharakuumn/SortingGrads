@@ -18,3 +18,5 @@ lib/
 dist/
 
 ~$TestBook.xlsx
+
+output.xlsx
