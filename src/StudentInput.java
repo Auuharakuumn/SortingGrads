@@ -85,6 +85,11 @@ public class StudentInput {
 		}
 	}
 
+	public StudentInput() {
+		this.studentGPA = new ArrayList<>();
+		this.students = new ArrayList<>();
+	}
+
 	public ArrayList<Double> getStudentGPA() {
 		return studentGPA;
 	}
