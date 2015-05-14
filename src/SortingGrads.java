@@ -8,6 +8,7 @@ import java.util.HashMap;
 public class SortingGrads {
 	public static void main(String[] args) throws FileNotFoundException {
 		StudentInput si = new StudentInput();
+		StudentOutput so;
 		Students s = new Students(); //Empty Constructor doesn't actually do anything, suppressing error
 		HashMap<String, Double> hm;
 		int sw;
@@ -123,9 +124,14 @@ public class SortingGrads {
 
 		//reserve the user input number of seats
 		s.reserveSeats(Integer.parseInt(num));
+
+		so = new StudentOutput(s.getOrder().toArray(new String[s.getOrder().size()]));
+
+
 	}
 
 	//Checks if string input is a valid integer
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	public static boolean isParsableInteger(String input) {
 		boolean parsable = true;
 
@@ -139,6 +145,7 @@ public class SortingGrads {
 	}
 
 	//Checks if string input is a valid double
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	public static boolean isParsableDouble(String input) {
 		boolean parsable = true;
 
@@ -188,32 +195,30 @@ public class SortingGrads {
 	}
 
 	public static ArrayList<String> standardizeNames(ArrayList<String> arr) {
-		ArrayList<String> nameArray = arr;
-
-		for (int i = 0; i < nameArray.size(); i++) {
+		for (int i = 0; i < arr.size(); i++) {
 			//remove leading and trailing whitespace
-			nameArray.set(i, nameArray.get(i).trim());
+			arr.set(i, arr.get(i).trim());
 
 			//If in form Last, First change to First Last
-			if (nameArray.get(i).matches("[A-Za-z]+, [A-Za-z]+")) {
-				String split[] = nameArray.get(i).split(", ");
+			if (arr.get(i).matches("[A-Za-z]+, [A-Za-z]+")) {
+				String split[] = arr.get(i).split(", ");
 
 				String tmp = split[1] + " " + split[0];
 
-				nameArray.set(i, tmp);
+				arr.set(i, tmp);
 			}
 
 			//Makes sure the first letter of each name is capitalized, to look pretty.
-			if (nameArray.get(i).matches("[A-Za-z]+ [A-Za-z]+")) {
-				String split[] = nameArray.get(i).split(" ");
+			if (arr.get(i).matches("[A-Za-z]+ [A-Za-z]+")) {
+				String split[] = arr.get(i).split(" ");
 
 				String tmp = split[0].substring(0, 1).toUpperCase() + split[0].substring(1) +
 						split[1].substring(0, 1).toUpperCase() + split[1].substring(1);
 
-				nameArray.set(i, tmp);
+				arr.set(i, tmp);
 			}
 		}
 
-		return nameArray;
+		return arr;
 	}
 }
