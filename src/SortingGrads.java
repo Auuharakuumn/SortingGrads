@@ -9,7 +9,7 @@ public class SortingGrads {
 	public static void main(String[] args) throws FileNotFoundException {
 		StudentInput si = new StudentInput();
 		Students s = new Students(); //Empty Constructor doesn't actually do anything, suppressing error
-		HashMap<String, Double> hm = new HashMap<>();
+		HashMap<String, Double> hm;
 		int sw;
 		boolean haveAnotherGo;
 		Object[] options = new String[] {"Excel Import", "Manual Input", "Quit"};
@@ -32,27 +32,9 @@ public class SortingGrads {
 						break;
 					}
 
-					for (int i = 0; i < si.getStudents().size(); i++) {
-						int j = 1;
-						String addStr = si.getStudents().get(i);
+					ArrayList<String> names = standardizeNames(si.getStudents());
 
-						//if a name already exists, make a student <student name> + number, to prevent false collisions
-						if (hm.containsKey(si.getStudents().get(i))) {
-							while (true) {
-								if (!(hm.containsKey(si.getStudents().get(i) + " " + j))) {
-									addStr += " " + j;
-
-									break;
-								}
-
-								j++;
-							}
-						}
-
-						addStr = addStr.trim();
-
-						hm.put(addStr, round(si.getStudentGPA().get(i), 2));
-					}
+					hm = convertArrayLists(names, si.getStudentGPA());
 
 					s = new Students(hm, si.getStudents().toArray(new String[si.getStudents().size()]));
 				}
@@ -69,8 +51,8 @@ public class SortingGrads {
 						do {
 							String[] tmpCarry = new String[2];
 
-							JTextField strField = new JTextField();
-							JTextField doubField = new JTextField();
+							JTextField strField = new JTextField(10);
+							JTextField doubField = new JTextField(10);
 
 							//Making a dialog box with multiple inputs
 							JPanel panel = new JPanel();
@@ -116,27 +98,10 @@ public class SortingGrads {
 						} while (comeAgain[1]);
 					} while (comeAgain[0]);
 
-					for (int i = 0; i < tmpNames.size(); i++) {
-						int j = 1;
-						String addStr = tmpNames.get(i);
 
-						//if a name already exists, make a student <student name> + number, to prevent false collisions
-						if (hm.containsKey(tmpNames.get(i))) {
-							while (true) {
-								if (!(hm.containsKey(tmpNames.get(i) + " " + j))) {
-									addStr += " " + j;
+					tmpNames = standardizeNames(tmpNames);
 
-									break;
-								}
-
-								j++;
-							}
-						}
-
-						addStr = addStr.trim();
-
-						hm.put(addStr, round(tmpGPA.get(i), 2));
-					}
+					hm = convertArrayLists(tmpNames, tmpGPA);
 
 					s = new Students(hm, tmpNames.toArray(new String[tmpNames.size()]));
 				}
@@ -165,7 +130,7 @@ public class SortingGrads {
 		boolean parsable = true;
 
 		try {
-			Integer i = Integer.parseInt(input); //assignment to get rid of warnings
+			Integer.parseInt(input);
 		} catch (NumberFormatException nfe) {
 			parsable = false;
 		}
@@ -178,7 +143,7 @@ public class SortingGrads {
 		boolean parsable = true;
 
 		try {
-			Double d = Double.parseDouble(input); //assignment to get rid of warnings
+			Double.parseDouble(input);
 		} catch (NumberFormatException nfe) {
 			parsable = false;
 		}
@@ -192,5 +157,63 @@ public class SortingGrads {
 		bd = bd.setScale(places, RoundingMode.HALF_UP);
 
 		return bd.doubleValue();
+	}
+
+	//creates a HashMap from a list of names, and their corresponding GPAs
+	public static HashMap<String, Double> convertArrayLists(ArrayList<String> strArr, ArrayList<Double> doubleArr) {
+		HashMap<String, Double> hm = new HashMap<>();
+
+		for (int i = 0; i < strArr.size(); i++) {
+			int j = 1;
+			String addStr = strArr.get(i);
+
+			//if a name already exists, make a student <student name> + number, to prevent false collisions
+			if (hm.containsKey(strArr.get(i))) {
+				while (true) {
+					if (!(hm.containsKey(strArr.get(i) + " " + j))) {
+						addStr += " " + j;
+
+						break;
+					}
+
+					j++;
+				}
+			}
+
+			//Shouldn't need anymore than two digits
+			hm.put(addStr, round(doubleArr.get(i), 2));
+		}
+
+		return hm;
+	}
+
+	public static ArrayList<String> standardizeNames(ArrayList<String> arr) {
+		ArrayList<String> nameArray = arr;
+
+		for (int i = 0; i < nameArray.size(); i++) {
+			//remove leading and trailing whitespace
+			nameArray.set(i, nameArray.get(i).trim());
+
+			//If in form Last, First change to First Last
+			if (nameArray.get(i).matches("[A-Za-z]+, [A-Za-z]+")) {
+				String split[] = nameArray.get(i).split(", ");
+
+				String tmp = split[1] + " " + split[0];
+
+				nameArray.set(i, tmp);
+			}
+
+			//Makes sure the first letter of each name is capitalized, to look pretty.
+			if (nameArray.get(i).matches("[A-Za-z]+ [A-Za-z]+")) {
+				String split[] = nameArray.get(i).split(" ");
+
+				String tmp = split[0].substring(0, 1).toUpperCase() + split[0].substring(1) +
+						split[1].substring(0, 1).toUpperCase() + split[1].substring(1);
+
+				nameArray.set(i, tmp);
+			}
+		}
+
+		return nameArray;
 	}
 }
