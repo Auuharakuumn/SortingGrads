@@ -127,7 +127,7 @@ public class SortingGrads {
 
 		so = new StudentOutput(s.getOrder().toArray(new String[s.getOrder().size()]));
 
-
+		so.writeExcel();
 	}
 
 	//Checks if string input is a valid integer
