@@ -18,5 +18,7 @@ Just a small little program to sort seniors into their seating spots.
 - Output
 	- Diagram of Seating Chart
 	- Possibly an excel doc.
+##Dependencies
+- Apache POI
 
 Formatting is hard.
