@@ -213,7 +213,7 @@ public class SortingGrads {
 			if (arr.get(i).matches("[A-Za-z]+ [A-Za-z]+")) {
 				String split[] = arr.get(i).split(" ");
 
-				String tmp = split[0].substring(0, 1).toUpperCase() + split[0].substring(1) +
+				String tmp = split[0].substring(0, 1).toUpperCase() + split[0].substring(1) + " " +
 						split[1].substring(0, 1).toUpperCase() + split[1].substring(1);
 
 				arr.set(i, tmp);
