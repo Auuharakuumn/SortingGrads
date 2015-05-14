@@ -14,6 +14,7 @@ public class Students {
 	public Students(HashMap<String, Double> studentsGPA, String[] students) {
 		this.studentsGPA = studentsGPA;
 		this.students = students;
+		this.highest = new String[2];
 		this.currReserved = 0;
 
 		int run = 0;

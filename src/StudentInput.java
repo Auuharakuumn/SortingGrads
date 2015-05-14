@@ -1,7 +1,4 @@
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellReference;
 
 import javax.swing.*;
@@ -56,25 +53,34 @@ public class StudentInput {
 				return;
 			}
 
-			if (returnVal == 1) {
-				JOptionPane.showMessageDialog(null, "File format is invalid.", "File Input Error", JOptionPane.WARNING_MESSAGE);
+			switch (returnVal) {
+				case 1:
+					JOptionPane.showMessageDialog(null, "File format is invalid.", "File Input Error", JOptionPane.WARNING_MESSAGE);
+
+					break;
+				case 2:
+					JOptionPane.showMessageDialog(null, "IO Error.", "File Input Error", JOptionPane.WARNING_MESSAGE);
+
+					break;
+				default:
+					break;
 			}
-		} while (returnVal != 1 && returnVal != 2); //Repeats a file dialog while the document isn't valid
+		} while (returnVal == 1 || returnVal == 2); //Repeats a file dialog while the document isn't valid
 
 		for (int i = 0; i < this.workbook.getNumberOfSheets(); i++) {
 			Sheet sheet = this.workbook.getSheetAt(i);
 
 			for (Row row : sheet) {
 				for (int j = 0; j <= 1; j++) {
-					CellReference ref = new CellReference(row.getCell(j));
+					Cell cell = row.getCell(j);
 
 					switch (j) {
 						case 0:
-							this.students.add(ref.formatAsString());
+							this.students.add(cell.getRichStringCellValue().toString());
 
 							break;
 						case 1:
-							this.studentGPA.add(Double.parseDouble(ref.formatAsString()));
+							this.studentGPA.add(cell.getNumericCellValue());
 
 							break;
 						default:
