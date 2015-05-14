@@ -109,7 +109,7 @@ public class SortingGrads {
 				break;
 
 				default:
-					return;
+					System.exit(1);
 			}
 		} while (haveAnotherGo);
 
@@ -128,6 +128,7 @@ public class SortingGrads {
 		so = new StudentOutput(s.getOrder().toArray(new String[s.getOrder().size()]));
 
 		so.writeExcel();
+		so.displayBox();
 	}
 
 	//Checks if string input is a valid integer

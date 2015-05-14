@@ -74,8 +74,6 @@ public class Students {
 
 		this.order.addAll(overFour);
 		this.order.addAll(underFour);
-
-
 	}
 
 	/*public String[] getStudents() {
