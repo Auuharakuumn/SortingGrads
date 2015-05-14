@@ -2,7 +2,6 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javax.swing.*;
-import java.applet.Applet;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
