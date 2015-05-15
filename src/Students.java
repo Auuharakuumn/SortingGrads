@@ -118,11 +118,16 @@ public class Students {
 			}
 		}
 
+		if (currentlyReservedLeft.size() == currReserved) {
+			return;
+		}
+
 		//If the number of reserved students goes over the number of edge seats on the right, have to reposition the left
 		//side reservations
-		for (Integer integer : currentlyReservedLeft) {
-			order.add(integer, "Reserved");
-			order.remove(integer + 1);
+		for (int i = 0; i < currentlyReservedLeft.size(); i++) {
+			for (int j = currentlyReservedLeft.get(i) + i + 1; j > currentlyReservedLeft.get(i); j--) {
+				Collections.swap(order, j, j - 1);
+			}
 		}
 	}
 
