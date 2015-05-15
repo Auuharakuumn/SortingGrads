@@ -9,6 +9,7 @@ public class Students {
 	private String[] students;
 	private String[] highest;
 	private int currReserved;
+	private ArrayList<Integer> currentlyReservedLeft;
 	private int endOfFour;
 
 	//pads the current student list to a multiple of 30
@@ -90,16 +91,18 @@ public class Students {
 			return;
 		}
 
+		currentlyReservedLeft = new ArrayList<>();
+
 		for (int i = endOfFour + 1; i < order.size(); i++) {
 			if ((i % 30) == 0) {
 				order.add(i, "Reserved");
+				currentlyReservedLeft.add(i);
 
 				this.currReserved++;
 			}
 
-
 			if (currReserved == reserved) {
-				return;
+				break;
 			}
 		}
 
@@ -111,19 +114,16 @@ public class Students {
 			}
 
 			if (currReserved == reserved) {
-				return;
-			}
-		}
-
-		for (int i = this.order.size() - 1; i >= 0; i--) {
-			if (!this.order.get(i).equals("Empty")) {
 				break;
-			} else {
-				this.order.remove(i);
 			}
 		}
 
-		this.pad();
+		//If the number of reserved students goes over the number of edge seats on the right, have to reposition the left
+		//side reservations
+		for (Integer integer : currentlyReservedLeft) {
+			order.add(integer, "Reserved");
+			order.remove(integer + 1);
+		}
 	}
 
 	//compare the two last names, to be used in the comparator
