@@ -9,15 +9,7 @@ public class Students {
 	private String[] students;
 	private String[] highest;
 	private int currReserved;
-	private ArrayList<Integer> currentlyReservedLeft;
 	private int endOfFour;
-
-	//pads the current student list to a multiple of 30
-	private void pad() {
-		while (this.order.size() % 30 != 0) {
-			order.add("Empty");
-		}
-	}
 
 	public Students(HashMap<String, Double> studentsGPA, String[] students) {
 		this.studentsGPA = studentsGPA;
@@ -91,7 +83,7 @@ public class Students {
 			return;
 		}
 
-		currentlyReservedLeft = new ArrayList<>();
+		ArrayList<Integer> currentlyReservedLeft = new ArrayList<>();
 
 		for (int i = endOfFour + 1; i < order.size(); i++) {
 			if ((i % 30) == 0) {

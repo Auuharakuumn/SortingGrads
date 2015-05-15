@@ -17,11 +17,11 @@ lib/
 
 dist/
 
+~$outputSorted.xlsx
 ~$TestBook.xlsx
 .~lock.output.xlsx#
+.~lock.outputSorted.xlsx#
 
 output.xlsx
 
 outputSorted.xlsx
-
-~$outputSorted.xlsx
