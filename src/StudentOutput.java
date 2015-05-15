@@ -26,6 +26,8 @@ public class StudentOutput {
 		int loop = 1;
 		FileOutputStream fos;
 
+		this.setBox();
+
 		do {
 			fileAvailable = true;
 			output = new File(fileName + ".xlsx");
@@ -52,10 +54,64 @@ public class StudentOutput {
 		for (int i = 0; i < this.orderedStudents.length; i++) {
 			Row r = sheet.createRow(i);
 
-			Cell[] c = new Cell[]{r.createCell(0), r.createCell(1)};
+			Cell[] c = new Cell[]{r.createCell(0), r.createCell(1), r.createCell(2)};
 
 			c[0].setCellValue(i + 1);
 			c[1].setCellValue(orderedStudents[i]);
+		}
+
+		try {
+			workbook.write(fos);
+		} catch (IOException ignored) {
+
+		}
+
+		fileName = "outputSorted";
+		do {
+			fileAvailable = true;
+			output = new File(fileName + ".xlsx");
+
+			if (output.exists()) {
+				output.delete();
+			}
+
+			try {
+				output.createNewFile();
+			} catch (IOException ioe) {
+				fileName = "outputSorted " + loop;
+				fileAvailable = false;
+				loop++;
+			}
+		} while (!fileAvailable);
+
+		fos = new FileOutputStream(output);
+		workbook = new XSSFWorkbook();
+		sheet = workbook.createSheet();
+
+		int count = 0;
+		int count2 = 0;
+		for (int i = 0; i < box.length; i++) {
+			Row r = sheet.createRow(i);
+
+			for (int j = 0; j < 31; j++) {
+				Cell c = r.createCell(j);
+				c.setCellValue(box[i][j >= 16 ? j - 1 : j]);
+
+				count++;
+				count2++;
+				if (count == 15) {
+					count = 0;
+
+					if (count2 == 30) {
+						count2 = 0;
+					} else {
+						j++;
+
+						Cell c2 = r.createCell(j);
+						c2.setCellValue(" ");
+					}
+				}
+			}
 		}
 
 		try {
@@ -86,10 +142,8 @@ public class StudentOutput {
 	}
 
 	public void displayBox() {
-		this.setBox();
-
 		NameGrid frame = new NameGrid("Boxen");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 		frame.addComponents(frame.getContentPane());
 

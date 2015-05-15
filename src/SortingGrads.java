@@ -10,7 +10,7 @@ public class SortingGrads {
 		StudentInput si = new StudentInput();
 		StudentOutput so;
 		Students s = new Students(); //Empty Constructor doesn't actually do anything, suppressing error
-		HashMap<String, Double> hm;
+		HashMap<String, Double> hm = null;
 		int sw;
 		boolean haveAnotherGo;
 		Object[] options = new String[] {"Excel Import", "Manual Input", "Quit"};
