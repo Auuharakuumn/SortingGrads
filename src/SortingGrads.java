@@ -119,13 +119,25 @@ public class SortingGrads {
 		String num;
 		do {
 			//Gets a string for the reserved number of seats
-			num = JOptionPane.showInputDialog("Input a number of seats: ");
+			num = JOptionPane.showInputDialog("Input a number of seats to reserve: ");
 		} while (!isParsableInteger(num)); // loop again if the string cant be parsed as an integer
 
 		//reserve the user input number of seats
 		s.reserveSeats(Integer.parseInt(num));
 
-		so = new StudentOutput(s.getOrder().toArray(new String[s.getOrder().size()]));
+		Object[] o = new Object[]{"First Initial", "Full Name"};
+
+		sw = JOptionPane.showOptionDialog(null, "First initial or full name?",
+				"Output", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+				o, o[1]);
+
+		String arg[] = s.getOrder().toArray(new String[s.getOrder().size()]);
+
+		if (sw == JOptionPane.OK_OPTION) {
+			convertToFirstInitial(arg);
+		}
+
+		so = new StudentOutput(arg);
 
 		so.writeExcel();
 		so.displayBox();
@@ -221,5 +233,17 @@ public class SortingGrads {
 		}
 
 		return arr;
+	}
+
+	public static String[] convertToFirstInitial(String[] args) {
+		for (int i = 0; i < args.length; i++) {
+			String[] split = args[i].split(" ");
+
+			if (split.length > 1 && split.length < 3) {
+				args[i] = split[0].substring(0, 1) + ". " + split[1];
+			}
+		}
+
+		return args;
 	}
 }

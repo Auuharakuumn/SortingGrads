@@ -11,13 +11,6 @@ public class Students {
 	private int currReserved;
 	private int endOfFour;
 
-	//pads the current student list to a multiple of 30
-	private void pad() {
-		while (this.order.size() % 30 != 0) {
-			order.add("Empty");
-		}
-	}
-
 	public Students(HashMap<String, Double> studentsGPA, String[] students) {
 		this.studentsGPA = studentsGPA;
 		this.students = students;
@@ -90,16 +83,18 @@ public class Students {
 			return;
 		}
 
+		ArrayList<Integer> currentlyReservedLeft = new ArrayList<>();
+
 		for (int i = endOfFour + 1; i < order.size(); i++) {
 			if ((i % 30) == 0) {
 				order.add(i, "Reserved");
+				currentlyReservedLeft.add(i);
 
 				this.currReserved++;
 			}
 
-
 			if (currReserved == reserved) {
-				return;
+				break;
 			}
 		}
 
@@ -111,19 +106,21 @@ public class Students {
 			}
 
 			if (currReserved == reserved) {
-				return;
-			}
-		}
-
-		for (int i = this.order.size() - 1; i >= 0; i--) {
-			if (!this.order.get(i).equals("Empty")) {
 				break;
-			} else {
-				this.order.remove(i);
 			}
 		}
 
-		this.pad();
+		if (currentlyReservedLeft.size() == currReserved) {
+			return;
+		}
+
+		//If the number of reserved students goes over the number of edge seats on the right, have to reposition the left
+		//side reservations
+		for (int i = 0; i < currentlyReservedLeft.size(); i++) {
+			for (int j = currentlyReservedLeft.get(i) + i + 1; j > currentlyReservedLeft.get(i); j--) {
+				Collections.swap(order, j, j - 1);
+			}
+		}
 	}
 
 	//compare the two last names, to be used in the comparator

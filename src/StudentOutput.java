@@ -28,6 +28,7 @@ public class StudentOutput {
 
 		this.setBox();
 
+		//If a certain file can't be used, selects an alternate, up to the integer limit :^)
 		do {
 			fileAvailable = true;
 			output = new File(fileName + ".xlsx");
@@ -51,6 +52,7 @@ public class StudentOutput {
 
 		Sheet sheet = workbook.createSheet();
 
+		//creating cells for position # and student name
 		for (int i = 0; i < this.orderedStudents.length; i++) {
 			Row r = sheet.createRow(i);
 
@@ -66,6 +68,7 @@ public class StudentOutput {
 
 		}
 
+		//If a certain file can't be used, selects an alternate, up to the integer limit :^)
 		fileName = "outputSorted";
 		do {
 			fileAvailable = true;
@@ -93,6 +96,7 @@ public class StudentOutput {
 		for (int i = 0; i < box.length; i++) {
 			Row r = sheet.createRow(i);
 
+			//used to create the boxes corresponding the seats in the excel file
 			for (int j = 0; j < 31; j++) {
 				Cell c = r.createCell(j);
 				c.setCellValue(box[i][j >= 16 ? j - 1 : j]);
@@ -151,6 +155,7 @@ public class StudentOutput {
 		frame.setVisible(true);
 	}
 
+	//literally just a box that has a ton of buttons named each student
 	private class NameGrid extends JFrame {
 		public NameGrid(String name) {
 			super(name);
